@@ -30,10 +30,10 @@ The post evaluates a film by analyzing specific cinematic techniques (e.g., cine
 **Definition:**  
 The post focuses primarily on the author's personal emotional reaction, entertainment value, or opinion about a film's quality without supporting the claim through technical analysis or film theory.
 
-### Clear Example 1
+### Example 1
 > "Am I the only one who found Oppenheimer incredibly boring? The pacing was completely frantic in the first hour and it just felt like a three-hour movie trailer."
 
-### Clear Example 2
+### Example 2
 > "Interstellar is Nolan's absolute masterpiece. No other movie has ever made me cry so hard while simultaneously blowing my mind with its sci-fi concepts."
 
 ### Uncertain / Borderline Case
