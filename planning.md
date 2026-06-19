@@ -79,9 +79,7 @@ This post sits directly on the boundary between `analytical_critique` and `subje
 <!-- Where will you collect examples? How many per label? What will you do if a label is underrepresented after 200 examples? -->
 **Source:** Collect posts directly from the Reddit community **r/TrueFilm** using Reddit search and subreddit browsing. Focus on discussion posts rather than comments, since posts typically contain enough text for meaningful classification.
 
-### Target Dataset Size
-
-**200 manually labeled posts**
+## Target Dataset Size: **200 manually labeled posts**
 
 | Label | Target Count |
 |---------|-------------|
