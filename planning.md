@@ -118,8 +118,44 @@ After collecting the initial 200 posts, review the label distribution. If any ca
 
 Continue collecting and labeling posts until each class contains at least **65 examples**, ensuring adequate representation across all categories.
 
-## Evaluation metrics
+## Evaluation Metrics
 <!-- Which metrics will you use to evaluate your model and why are those the right ones for this specific task? (Accuracy alone is not enough — explain what else you need and why.) -->
+To evaluate the classifier, I will use **Accuracy, Precision, Recall, F1 Score, and a Confusion Matrix**.
+
+### Accuracy
+
+Accuracy measures the percentage of correctly classified posts overall. It provides a general view of model performance, but it is not sufficient by itself because it does not reveal whether the model performs equally well across all three labels.
+
+### Precision
+
+Precision measures how often a predicted label is correct. This is important because incorrectly labeling a post as **analytical_critique** when it is actually **subjective_take** would reduce the usefulness of the classifier.
+
+### Recall
+
+Recall measures how many true examples of a label the model successfully identifies. This helps determine whether the model is missing important examples of a category.
+
+### F1 Score
+
+F1 Score balances Precision and Recall into a single metric. Because the boundaries between **analytical_critique**, **subjective_take**, and **narrative_decoding** are often subtle and overlapping, F1 Score provides a better measure of classification quality than Accuracy alone.
+
+I will report:
+- Precision for each label
+- Recall for each label
+- F1 Score for each label
+- Macro-average F1 Score across all labels
+
+### Confusion Matrix
+
+A confusion matrix shows exactly where the model makes mistakes. This is especially important for this project because the most challenging cases occur when the model confuses:
+
+- **analytical_critique** with **subjective_take**
+- **analytical_critique** with **narrative_decoding**
+
+The confusion matrix helps identify these label-boundary errors and supports deeper error analysis.
+
+### Why These Metrics Are Appropriate
+
+These metrics are appropriate because the task involves distinguishing between three closely related discussion styles rather than simply identifying positive or negative sentiment. Accuracy alone could hide systematic confusion between labels, while Precision, Recall, F1 Score, and the Confusion Matrix provide a detailed view of how well the model understands the distinctions defined in the taxonomy.
 
 ## Definition of success
 <!-- What performance would make this classifier genuinely useful? What would you accept as "good enough" for deployment in a real community tool? -->
