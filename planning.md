@@ -77,6 +77,46 @@ This post sits directly on the boundary between `analytical_critique` and `subje
 
 ## Data collection plan
 <!-- Where will you collect examples? How many per label? What will you do if a label is underrepresented after 200 examples? -->
+**Source:** Collect posts directly from the Reddit community **r/TrueFilm** using Reddit search and subreddit browsing. Focus on discussion posts rather than comments, since posts typically contain enough text for meaningful classification.
+
+### Target Dataset Size
+
+**200 manually labeled posts**
+
+| Label | Target Count |
+|---------|-------------|
+| analytical_critique | 65–67 |
+| subjective_take | 65–67 |
+| narrative_decoding | 65–67 |
+
+A roughly balanced dataset helps prevent the model from favoring one label simply because it appears more frequently than others.
+
+### Collection Strategy
+
+- Sort posts by **Top**, **Hot**, and **New** to capture a variety of discussion styles.
+- Sample films from different genres, decades, countries, and directors.
+- Manually label each post according to the defined taxonomy.
+- Exclude posts that are too short, deleted, or lack sufficient context for labeling.
+
+### Handling Underrepresented Labels
+
+After collecting the initial 200 posts, review the label distribution. If any category contains fewer than **65 examples**, perform targeted searches to gather additional samples.
+
+**Suggested search terms:**
+
+| Search Term | Likely Label |
+|-------------|-------------|
+| "ending explained" | narrative_decoding |
+| "symbolism" | narrative_decoding |
+| "why did this movie fail" | subjective_take |
+| "why did this movie succeed" | subjective_take |
+| "personal opinion" | subjective_take |
+| "cinematography" | analytical_critique |
+| "editing" | analytical_critique |
+| "mise-en-scène" | analytical_critique |
+| "film theory" | analytical_critique |
+
+Continue collecting and labeling posts until each class contains at least **65 examples**, ensuring adequate representation across all categories.
 
 ## Evaluation metrics
 <!-- Which metrics will you use to evaluate your model and why are those the right ones for this specific task? (Accuracy alone is not enough — explain what else you need and why.) -->
