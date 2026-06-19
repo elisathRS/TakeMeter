@@ -91,14 +91,14 @@ This post sits directly on the boundary between `analytical_critique` and `subje
 
 A roughly balanced dataset helps prevent the model from favoring one label simply because it appears more frequently than others.
 
-### Collection Strategy
+## Collection Strategy
 
 - Sort posts by **Top**, **Hot**, and **New** to capture a variety of discussion styles.
 - Sample films from different genres, decades, countries, and directors.
 - Manually label each post according to the defined taxonomy.
 - Exclude posts that are too short, deleted, or lack sufficient context for labeling.
 
-### Handling Underrepresented Labels
+## Handling Underrepresented Labels
 
 After collecting the initial 200 posts, review the label distribution. If any category contains fewer than **65 examples**, perform targeted searches to gather additional samples.
 
@@ -158,4 +158,44 @@ The confusion matrix helps identify these label-boundary errors and supports dee
 These metrics are appropriate because the task involves distinguishing between three closely related discussion styles rather than simply identifying positive or negative sentiment. Accuracy alone could hide systematic confusion between labels, while Precision, Recall, F1 Score, and the Confusion Matrix provide a detailed view of how well the model understands the distinctions defined in the taxonomy.
 
 # Definition of success
-<!-- What performance would make this classifier genuinely useful? What would you accept as "good enough" for deployment in a real community tool? -->
+
+A classifier becomes genuinely useful when it can assist moderators, researchers, or community members with minimal manual correction while maintaining consistent performance across all categories.
+
+## Minimum Acceptable Performance
+
+For a three-class classification task (`analytical_critique`, `subjective_take`, and `narrative_decoding`), a reasonable baseline for deployment would be:
+
+- **Accuracy:** ≥ 75%
+- **Macro F1 Score:** ≥ 0.70
+- **Per-Class Precision and Recall:** ≥ 0.65
+
+At this level, the model can provide useful recommendations or automatically organize posts, although occasional misclassifications would still require human review.
+
+## Good Performance
+
+A model would be considered reliable for everyday community use if it achieves:
+
+- **Accuracy:** 80–85%
+- **Macro F1 Score:** ≥ 0.80
+- **Per-Class Precision and Recall:** ≥ 0.75
+
+This performance level indicates that the classifier can distinguish between analytical criticism, subjective opinion, and narrative interpretation with relatively few errors. Most predictions would be trustworthy enough for content tagging, search filtering, or recommendation systems.
+
+## Strong Deployment Target
+
+For automated moderation support or large-scale content organization, an ideal target would be:
+
+- **Accuracy:** ≥ 85%
+- **Macro F1 Score:** ≥ 0.85
+- **Per-Class Precision and Recall:** ≥ 0.80
+
+At this level, the model would consistently identify discussion styles and require only limited human oversight.
+
+## Evaluation Focus
+
+Because the dataset is intentionally balanced, **Macro F1 Score** should be treated as the primary metric rather than accuracy alone. Macro F1 ensures that all three categories are classified well and prevents strong performance on one label from masking weak performance on another.
+
+## Definition of "Good Enough"
+
+For this project, a classifier with a **Macro F1 score of at least 0.80 and an accuracy above 80%** would be considered "good enough" for deployment as a community assistance tool. It would provide reliable post categorization while keeping manual review effort relatively low.
+
