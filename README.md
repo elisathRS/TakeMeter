@@ -263,9 +263,8 @@ The spec called for a "fine-tuning pipeline" with DistilBERT, which I implemente
 
 ---
 
-  ## Video Walkthrough
-
-     [Watch the video](https://www.loom.com/share/b364181698564d7fae0fbd3bdb2127f7](https://www.loom.com/share/c463c0f17c1d49c98dd992239e576e66)
+## Video Walkthrough
+    [Watch the video](https://www.loom.com/share/c463c0f17c1d49c98dd992239e576e66)
 
 ---
 
