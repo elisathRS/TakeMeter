@@ -61,7 +61,7 @@ The post focuses on explaining, debating, or recapping plot points, character mo
 
 ## Hardest Anticipated Edge Case
 
-### Example
+### Example 1
 > "The sound design in Zone of Interest is incredible because it forces you to hear the horror happening off-screen while the family acts normal. It makes you feel deeply uncomfortable the entire time."
 
 ### The Conflict
@@ -74,6 +74,34 @@ This post sits directly on the boundary between `analytical_critique` and `subje
 
 ### Final Classification for This Example
 **`analytical_critique`** — because the core claim identifies and explains a deliberate filmmaking technique (off-screen sound) and its narrative purpose, while the emotional reaction serves as supporting evidence.
+
+## Additional Difficult Examples
+
+### Example 2
+> "I know the ending of Donnie Darko is supposed to be intentionally ambiguous, but I still think the movie fails because it gives the audience too many unanswered questions and never really rewards the emotional investment."
+
+### The Conflict
+This post contains both a narrative judgement about the ending and a personal quality assessment of the film's effectiveness.
+
+### Decision Rule
+- Label as **`subjective_take`** when the main claim is about the film's success or failure and the language is opinionated.
+- Label as **`narrative_decoding`** when the post focuses on explaining or interpreting story elements and their meaning.
+
+### Final Classification for This Example
+**`subjective_take`** — because the dominant claim is that the movie "fails" and the statement is about the writer's reaction to the narrative choices rather than an explanation of what happened.
+
+### Example 3
+> "The long tracking shot in Once Upon a Time in Hollywood says more about Rick Dalton's fractured ego than any dialogue in that scene. It's a visual statement about his inability to separate fantasy from reality."
+
+### The Conflict
+This post mixes discussion of a specific filmmaking technique with an interpretation of character motivation.
+
+### Decision Rule
+- Label as **`analytical_critique`** when the post explains how technical choices convey meaning.
+- Label as **`narrative_decoding`** when the post focuses primarily on plot or character motivation without enough emphasis on craft.
+
+### Final Classification for This Example
+**`analytical_critique`** — because the tracking shot and visual staging are analyzed as deliberate techniques that reveal character psychology.
 
 # Data collection plan
 <!-- Where will you collect examples? How many per label? What will you do if a label is underrepresented after 200 examples? -->
