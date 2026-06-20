@@ -46,7 +46,30 @@ Total: 201 examples.
 
 ## Difficult Examples and Label Decisions
 
-At least three genuinely hard cases are documented in `planning.md` with the labeling decision and rationale for each. These examples help clarify boundary decisions when posts include both technique and personal reaction or both plot explanation and evaluation.
+### Example 1 — Technique mention with emotional framing
+> "The sound design in Zone of Interest is incredible because it forces you to hear the horror happening off-screen while the family acts normal. It makes you feel deeply uncomfortable the entire time."
+
+**Conflict:** References a specific filmmaking technique (off-screen audio) but centers the argument on viewer emotional reaction.
+**Decision rule:** Label as `analytical_critique` when the post spends more effort explaining *how* a technique works and *why* it creates meaning; label as `subjective_take` when personal feeling is the dominant claim.
+**Label assigned: `analytical_critique`** — the core claim identifies a deliberate technique and its narrative purpose; the emotional reaction is supporting evidence, not the main point.
+
+---
+
+### Example 2 — Narrative judgment blended with quality assessment
+> "I know the ending of Donnie Darko is supposed to be intentionally ambiguous, but I still think the movie fails because it gives the audience too many unanswered questions and never really rewards the emotional investment."
+
+**Conflict:** Contains both a narrative judgment about the ending and a personal quality assessment of the film's effectiveness.
+**Decision rule:** Label as `subjective_take` when the main claim is about the film's success or failure and the language is opinionated; label as `narrative_decoding` when the focus is on explaining or interpreting story elements.
+**Label assigned: `subjective_take`** — the dominant claim is that the movie "fails"; the statement is about the writer's reaction to the narrative choices, not an explanation of what happened.
+
+---
+
+### Example 3 — Filmmaking technique used to decode character
+> "The long tracking shot in Once Upon a Time in Hollywood says more about Rick Dalton's fractured ego than any dialogue in that scene. It's a visual statement about his inability to separate fantasy from reality."
+
+**Conflict:** Mixes discussion of a specific technique (tracking shot) with character motivation interpretation.
+**Decision rule:** Label as `analytical_critique` when the post explains how technical choices convey meaning; label as `narrative_decoding` when the focus is on plot or character motivation without emphasis on craft.
+**Label assigned: `analytical_critique`** — the tracking shot and visual staging are analyzed as deliberate techniques that reveal character psychology.
 
 ## Fine-Tuning Pipeline
 
@@ -237,5 +260,6 @@ The spec's requirement for "at least 3 genuinely difficult examples" forced me t
 
 **How implementation diverged from the spec:**
 The spec called for a "fine-tuning pipeline" with DistilBERT, which I implemented. However, the results were the opposite of what the spec implicitly assumed: the zero-shot Groq baseline (97%) significantly outperformed the fine-tuned DistilBERT (77%). This was surprising and forced me to revise the evaluation narrative: rather than celebrating fine-tuning gains, I had to interpret why fine-tuning on 140 examples failed to reach baseline performance. The most likely explanation is that DistilBERT (66M parameters, trained on general text) does not have enough capacity to learn the subtle symbolism boundary between `analytical_critique` and `narrative_decoding` from a small dataset, while the large Groq LLM can apply the label definitions directly from the prompt. This revealed that the project's real contribution is the **taxonomy definition** — clear enough that a prompted LLM applies it accurately without any training.
+
 
 
