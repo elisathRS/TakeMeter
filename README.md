@@ -61,6 +61,37 @@ At least three genuinely hard cases are documented in `planning.md` with the lab
 
 These decisions are documented in the fine-tuning notebook and should be explained in the final project report.
 
+## Baseline Comparison
+
+- Baseline approach: zero-shot classification using Groq with the `llama-3.3-70b-versatile` model.
+- Prompt structure: the baseline prompt provides the subreddit context, label definitions, one example per label, and explicit instructions to respond with only the label name.
+- Example prompt text:
+
+```text
+You are classifying posts from the subreddit r/TrueFilm.
+Assign each post to exactly one of the following categories.
+
+analytical_critique: The post analyzes a film using cinematic techniques such as cinematography, editing, sound design, mise-en-scène, structure, or historical/contextual film analysis rather than focusing on personal feelings or simple plot summary.
+Example: "If you track the blocking in Parasite, Bong Joon-ho consistently places the Kim family lower in the frame to emphasize class hierarchy."
+
+subjective_take: The post primarily expresses personal opinion, emotional reaction, or evaluation of a film’s quality without supporting it with technical or theoretical analysis.
+Example: "I found Oppenheimer really boring and the pacing felt exhausting the entire time."
+
+narrative_decoding: The post focuses on explaining plot events, character motivations, symbolism tied directly to story elements, or asking questions about the story or ending.
+Example: "Can someone explain the ending of Inception? Did Cobb ever wake up or not?"
+
+Respond with ONLY the label name exactly as written.
+Do not explain your reasoning.
+
+Valid labels:
+analytical_critique
+subjective_take
+narrative_decoding
+```
+
+- Results collection: the baseline runs on the same held-out test set as the fine-tuned model, then computes accuracy and per-label metrics for direct comparison.
+- Evaluation output: `evaluation_results.json` is generated with both baseline and fine-tuned accuracy values, while `confusion_matrix.png` visualizes performance on the test set.
+
 ## Usage
 
 1. Place your labeled CSV file in the project folder.
