@@ -14,15 +14,18 @@ The goal is to distinguish posts that focus on technical film analysis, personal
 
 ### analytical_critique
 - Definition: The post evaluates a film by analyzing specific cinematic techniques (for example, cinematography, editing, sound design, mise-en-scène, or historical/contextual meaning).
-- Example focus: technical craft and why the director made certain formal choices.
+- Example 1: "Villeneuve's use of brutalist architecture in Dune isn't just an aesthetic choice; it visually reinforces the colonial oppression of the Harkonnens by making the scale of the environments completely swallow the human form."
+- Example 2: "If you track the blocking in the dinner scene of Parasite, Bong Joon-ho consistently places the Kim family physically lower in the frame than the Park family, a literal visual framing of class stratification."
 
 ### subjective_take
 - Definition: The post focuses primarily on the author's personal emotional reaction or opinion about the film's quality or entertainment value.
-- Example focus: feelings, enjoyment, boredom, praise, or dislike.
+- Example 1: "Am I the only one who found Oppenheimer incredibly boring? The pacing was completely frantic in the first hour and it just felt like a three-hour movie trailer."
+- Example 2: "Interstellar is Nolan's absolute masterpiece. No other movie has ever made me cry so hard while simultaneously blowing my mind with its sci-fi concepts."
 
 ### narrative_decoding
 - Definition: The post focuses on plot points, character motivations, symbolism tied to story events, or ending explanations rather than filmmaking technique.
-- Example focus: what happened, why it happened, or how to interpret the story.
+- Example 1: "In the ending of Inception, it doesn't actually matter if the top keeps spinning or falls, because Cobb walks away from it, showing he finally accepts his reality with his kids."
+- Example 2: "Can someone explain why the bear scene in Annihilation happened? Was the bear actually mutated by the Shimmer, or was it carrying the consciousness of the person it killed?"
 
 ## Dataset and Labeling
 
@@ -33,13 +36,13 @@ The goal is to distinguish posts that focus on technical film analysis, personal
 
 ### Label distribution
 
-The dataset is designed to be balanced across the three labels. Current planned distribution:
+The dataset is balanced across all three labels:
 
-- `analytical_critique`: 67 examples
-- `subjective_take`: 66 examples
-- `narrative_decoding`: 67 examples
+- `analytical_critique`: 67 examples (33.3%)
+- `subjective_take`: 67 examples (33.3%)
+- `narrative_decoding`: 67 examples (33.3%)
 
-> If a final dataset file is available, these counts should be updated with the actual labeled counts from the CSV.
+Total: 201 examples.
 
 ## Difficult Examples and Label Decisions
 
@@ -98,37 +101,37 @@ narrative_decoding
 
 | Metric | Zero-shot Baseline (Groq) | Fine-Tuned DistilBERT |
 |---|---|---|
-| Overall Accuracy | 0.97 | 0.97 |
-| Macro F1 Score | 0.97 | 0.97 |
+| Overall Accuracy | 0.97 | 0.77 |
+| Macro F1 Score | 0.97 | 0.78 |
 | Test Set Size | 31 | 31 |
 | Parseable Responses | 31/31 | 31/31 |
 
-**Observation:** Both models achieve identical accuracy on the test set. The baseline's strong zero-shot performance suggests the task is well-defined and the label definitions are clear. The fine-tuned model matches this performance despite the small dataset, indicating effective transfer learning.
+**Observation:** The zero-shot baseline outperforms the fine-tuned model on this test set (0.97 vs 0.77). The baseline's strong zero-shot performance suggests the task is well-defined and the label definitions are clear enough for a large language model to apply them reliably. The fine-tuned DistilBERT achieves 77% accuracy — above the 75% minimum threshold — but falls short of the 80% "good enough" target defined in `planning.md`. The primary source of fine-tuned model errors is systematic confusion between `analytical_critique` and `narrative_decoding` on symbolism-heavy posts, a boundary the larger LLM baseline handles more robustly.
 
 ### Per-Class Metrics (Fine-Tuned Model)
 
 | Label | Precision | Recall | F1 Score | Support |
 |---|---|---|---|---|
-| analytical_critique | 0.91 | 1.00 | 0.95 | 10 |
-| subjective_take | 1.00 | 0.90 | 0.95 | 10 |
-| narrative_decoding | 1.00 | 1.00 | 1.00 | 11 |
-| **Macro Average** | **0.97** | **0.97** | **0.97** | **31** |
+| analytical_critique | 0.60 | 0.90 | 0.72 | 10 |
+| subjective_take | 1.00 | 0.80 | 0.89 | 10 |
+| narrative_decoding | 0.88 | 0.64 | 0.74 | 11 |
+| **Macro Average** | **0.83** | **0.78** | **0.78** | **31** |
 
-Overall accuracy: **0.97** (30/31 correct on test set)
+Overall accuracy: **0.77** (24/31 correct on test set)
 
 ### Confusion Matrix (Fine-Tuned Model)
 
 | Predicted → | analytical_critique | subjective_take | narrative_decoding |
 |---|---|---|---|
 | **Actual ↓** | | | |
-| analytical_critique | 10 | 0 | 0 |
-| subjective_take | 1 | 9 | 0 |
-| narrative_decoding | 0 | 0 | 11 |
+| analytical_critique | 9 | 0 | 1 |
+| subjective_take | 2 | 8 | 0 |
+| narrative_decoding | 4 | 0 | 7 |
 
 **Key observations:**
-- `narrative_decoding` achieves perfect predictions (11/11).
-- `analytical_critique` recalls all 10 true positives but receives 1 false positive from subjective_take.
-- `subjective_take` has 1 false negative (misclassified as analytical_critique).
+- `narrative_decoding` is the hardest label: 4 of its 11 examples are misclassified as `analytical_critique` (recall 0.64).
+- `analytical_critique` has high recall (0.90) but low precision (0.60) — it absorbs 6 false positives from the other two classes.
+- `subjective_take` has the cleanest predictions: perfect precision (1.00) with 2 false negatives misclassified as `analytical_critique`.
 
 ### Sample Classifications (Correct Predictions)
 
@@ -203,6 +206,12 @@ Posts using superlatives ("best," "greatest") without technical support are bein
 
 The label definitions may benefit from explicit guidance on the presence/absence of formal analysis: analytical_critique should require explanation of *how* technique works, not just *what* is being discussed or *whether* it succeeds.
 
+## Usage
+
+1. Place your labeled CSV file in the project folder.
+2. Open `takemeter.py` and update `LABEL_MAP` to match your label names if needed.
+3. Run the notebook or script to train the model and evaluate on the test set.
+
 ## AI Usage and Spec Reflection
 
 ### AI Tool Usage
@@ -227,10 +236,6 @@ The labeled dataset (`r_truefilm_dataset.csv` with 201 examples) was **manually 
 The spec's requirement for "at least 3 genuinely difficult examples" forced me to deeply understand the boundary between labels. This led to creating `planning.md` with three detailed edge cases and explicit decision rules. These cases became the foundation for all downstream work — when I later encountered model errors, I could immediately map them to these pre-defined boundary patterns. The taxonomy became more precise because I had to explain exactly *why* each difficult case belonged to one label, not another.
 
 **How implementation diverged from the spec:**
-The spec called for a "fine-tuning pipeline" with DistilBERT, which I implemented. However, the spec implicitly assumed the fine-tuned model would significantly outperform a baseline. Instead, both the zero-shot Groq baseline and the fine-tuned model achieved **97% accuracy**. This was surprising and forced me to revise the evaluation narrative: rather than celebrating fine-tuning gains, I had to interpret why a well-designed taxonomy and clear prompt can make zero-shot classification nearly as effective as a fine-tuned model. This revealed that the project's real contribution is the **taxonomy definition**, not the model architecture.
+The spec called for a "fine-tuning pipeline" with DistilBERT, which I implemented. However, the results were the opposite of what the spec implicitly assumed: the zero-shot Groq baseline (97%) significantly outperformed the fine-tuned DistilBERT (77%). This was surprising and forced me to revise the evaluation narrative: rather than celebrating fine-tuning gains, I had to interpret why fine-tuning on 140 examples failed to reach baseline performance. The most likely explanation is that DistilBERT (66M parameters, trained on general text) does not have enough capacity to learn the subtle symbolism boundary between `analytical_critique` and `narrative_decoding` from a small dataset, while the large Groq LLM can apply the label definitions directly from the prompt. This revealed that the project's real contribution is the **taxonomy definition** — clear enough that a prompted LLM applies it accurately without any training.
 
-## Usage
 
-1. Place your labeled CSV file in the project folder.
-2. Open `takemeter.py` and update `LABEL_MAP` to match your label names if needed.
-3. Run the notebook or script to train the model and evaluate on the test set.
