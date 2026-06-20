@@ -203,6 +203,32 @@ Posts using superlatives ("best," "greatest") without technical support are bein
 
 The label definitions may benefit from explicit guidance on the presence/absence of formal analysis: analytical_critique should require explanation of *how* technique works, not just *what* is being discussed or *whether* it succeeds.
 
+## AI Usage and Spec Reflection
+
+### AI Tool Usage
+
+**Instance #1 — Label boundary stress-testing**
+- Directed: Used an LLM to generate synthetic borderline posts sitting between `analytical_critique` and `narrative_decoding` to test the clarity of label definitions.
+- Result: Generated posts helped identify that "symbolic" language often triggers ambiguity — posts like "The Star Child represents humanity's next evolutionary leap" could be interpreted as either narrative symbolism or film theory depending on context.
+- Revised: Updated the label definitions in `planning.md` to explicitly clarify that `analytical_critique` requires discussion of *how filmmaking technique works*, not just *what is being discussed*.
+
+**Instance #2 — Error pattern analysis**
+- Directed: After model training, used an LLM to analyze the 7 misclassified examples and group them into systematic error patterns.
+- Result: The model was grouping "analysis of meaning" with "analysis of technique," leading to confusion between `analytical_critique` and `narrative_decoding` on symbolic posts.
+- Revised: Manually reviewed all LLM-generated hypotheses and kept only the patterns I could verify in the actual errors (symbolism confusion, superlative + technical vocabulary confusion). Rejected overly generic observations like "the model needs more data."
+
+### Annotation Assistance Disclosure
+
+The labeled dataset (`r_truefilm_dataset.csv` with 201 examples) was **manually annotated without AI assistance**. All 201 posts were read and labeled by hand according to the taxonomy definitions. No AI pre-labeling was used; every label decision is human-verified.
+
+### Spec Reflection
+
+**How the spec guided the work:**
+The spec's requirement for "at least 3 genuinely difficult examples" forced me to deeply understand the boundary between labels. This led to creating `planning.md` with three detailed edge cases and explicit decision rules. These cases became the foundation for all downstream work — when I later encountered model errors, I could immediately map them to these pre-defined boundary patterns. The taxonomy became more precise because I had to explain exactly *why* each difficult case belonged to one label, not another.
+
+**How implementation diverged from the spec:**
+The spec called for a "fine-tuning pipeline" with DistilBERT, which I implemented. However, the spec implicitly assumed the fine-tuned model would significantly outperform a baseline. Instead, both the zero-shot Groq baseline and the fine-tuned model achieved **97% accuracy**. This was surprising and forced me to revise the evaluation narrative: rather than celebrating fine-tuning gains, I had to interpret why a well-designed taxonomy and clear prompt can make zero-shot classification nearly as effective as a fine-tuned model. This revealed that the project's real contribution is the **taxonomy definition**, not the model architecture.
+
 ## Usage
 
 1. Place your labeled CSV file in the project folder.
