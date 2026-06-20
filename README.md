@@ -261,5 +261,13 @@ The spec's requirement for "at least 3 genuinely difficult examples" forced me t
 **How implementation diverged from the spec:**
 The spec called for a "fine-tuning pipeline" with DistilBERT, which I implemented. However, the results were the opposite of what the spec implicitly assumed: the zero-shot Groq baseline (97%) significantly outperformed the fine-tuned DistilBERT (77%). This was surprising and forced me to revise the evaluation narrative: rather than celebrating fine-tuning gains, I had to interpret why fine-tuning on 140 examples failed to reach baseline performance. The most likely explanation is that DistilBERT (66M parameters, trained on general text) does not have enough capacity to learn the subtle symbolism boundary between `analytical_critique` and `narrative_decoding` from a small dataset, while the large Groq LLM can apply the label definitions directly from the prompt. This revealed that the project's real contribution is the **taxonomy definition** — clear enough that a prompted LLM applies it accurately without any training.
 
+---
+
+  ## Video Walkthrough
+
+     [Watch the video](https://www.loom.com/share/b364181698564d7fae0fbd3bdb2127f7](https://www.loom.com/share/c463c0f17c1d49c98dd992239e576e66)
+
+---
+
 
 
